@@ -8,6 +8,7 @@
 <style>
 /* ============================================
    Apple Liquid Glass + Japanese Warm
+   v16: 舞台灯光灯箱 + 纯图走马灯 + 全局回弹
    ============================================ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -38,6 +39,7 @@
     --radius-lg: 24px;
     --transition: 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
     --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --bounce: 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 html{scroll-behavior:smooth;font-size:16px;background:var(--bg)}
 body{
@@ -51,6 +53,29 @@ body::before{
         radial-gradient(ellipse 60% 50% at 80% 50%, rgba(196,148,59,0.03) 0%, transparent 60%),
         radial-gradient(ellipse 70% 50% at 50% 90%, rgba(42,64,115,0.02) 0%, transparent 60%);
 }
+
+/* ============================================
+   GLOBAL APPLE LIQUID GLASS BOUNCE
+   ============================================ */
+.glass-card:active,
+.ai-card:active{
+    transform:scale(0.96) !important;
+    transition:transform var(--bounce) !important;
+}
+.proj-carousel-card:active .proj-carousel-glass{
+    transform:scale(0.96);
+    transition:transform var(--bounce);
+}
+.photo-ball-card:active .photo-ball-glass{
+    transform:scale(0.94) !important;
+    transition:transform var(--bounce) !important;
+}
+.gallery-card:active{
+    transform:scale(0.97);
+    transition:transform var(--bounce);
+}
+.skill-card:active{transform:scale(0.95) !important;transition:transform var(--bounce) !important}
+.contact-link:active{transform:scale(0.94) !important;transition:transform var(--bounce) !important}
 
 /* Nav */
 .nav{
@@ -155,7 +180,7 @@ body::before{
 .glass-card.magnetic{transition:all 0.15s ease-out}
 
 /* ============================================
-   PROJECTS CAROUSEL (horizontal scroll)
+   PROJECTS CAROUSEL — horizontal auto-jump
    ============================================ */
 .projects-carousel-section{
     padding:60px 0 80px;position:relative;text-align:center
@@ -190,7 +215,7 @@ body::before{
 @media(max-width:768px){ .projects-carousel-track{padding:0 20px} }
 
 .proj-carousel-card{
-    flex-shrink:0;width:340px;border-radius:var(--radius-lg);
+    flex-shrink:0;width:420px;border-radius:var(--radius-lg);
     cursor:pointer;transition:transform var(--transition-spring);
     position:relative;overflow:visible
 }
@@ -207,7 +232,7 @@ body::before{
     box-shadow:var(--glass-shadow-hover)
 }
 .proj-carousel-img-wrap{
-    width:100%;height:220px;overflow:hidden;position:relative;
+    width:100%;height:300px;overflow:hidden;position:relative;
     background:var(--bg-elevated)
 }
 .proj-carousel-img-wrap img{
@@ -215,17 +240,6 @@ body::before{
     transition:transform 0.6s
 }
 .proj-carousel-card:hover .proj-carousel-img-wrap img{transform:scale(1.08)}
-.proj-carousel-overlay{
-    padding:18px 20px;text-align:left
-}
-.proj-carousel-emoji{font-size:1rem;display:block;margin-bottom:4px}
-.proj-carousel-type{font-size:0.62rem;font-weight:600;color:var(--indigo);letter-spacing:0.08em}
-.proj-carousel-name{font-size:1.1rem;font-weight:800;margin:4px 0 6px;letter-spacing:0.02em}
-.proj-carousel-tag{
-    display:inline-block;font-size:0.64rem;font-weight:500;
-    color:var(--accent);background:var(--accent-glow);
-    padding:2px 10px;border-radius:3px
-}
 .proj-carousel-hint{
     margin-top:16px;font-size:0.66rem;color:var(--text-muted);
     letter-spacing:0.06em;display:flex;align-items:center;
@@ -239,10 +253,8 @@ body::before{
 .proj-carousel-dot.active{background:var(--accent);transform:scale(1.5);box-shadow:0 0 8px var(--accent-glow)}
 
 @media(max-width:600px){
-    .proj-carousel-card{width:280px}
-    .proj-carousel-img-wrap{height:180px}
-    .proj-carousel-name{font-size:0.95rem}
-    .proj-carousel-overlay{padding:14px 16px}
+    .proj-carousel-card{width:300px}
+    .proj-carousel-img-wrap{height:240px}
 }
 
 /* ============================================
@@ -367,44 +379,21 @@ body::before{
 @media(max-width:600px){.tl-card{width:240px}}
 
 /* ============================================
-   SKILLS GRID
+   SKILLS GRID — compact layout
    ============================================ */
-.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.skills-section{padding:70px 0}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
 @media(max-width:768px){.skills-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.skills-grid{grid-template-columns:1fr}}
 .skill-card{
-    padding:24px 20px;text-align:center;transition:transform var(--transition),box-shadow var(--transition)
+    padding:18px 14px;text-align:center;
+    transition:transform var(--transition),box-shadow var(--transition);
+    border-radius:var(--radius)
 }
 .skill-card:hover{transform:translateY(-3px)}
-.skill-icon{font-size:1.8rem;display:block;margin-bottom:10px}
-.skill-name{font-size:0.94rem;font-weight:700;margin-bottom:4px}
-.skill-desc{font-size:0.72rem;color:var(--text-muted);line-height:1.6}
-
-/* ============================================
-   PHOTO GRID
-   ============================================ */
-.photo-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
-.photo-tab{
-    padding:6px 18px;border-radius:20px;border:1px solid var(--rule-strong);
-    background:transparent;cursor:pointer;font-size:0.78rem;
-    color:var(--text-secondary);transition:all 0.25s;font-family:inherit
-}
-.photo-tab.active,.photo-tab:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
-.photo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-@media(max-width:900px){.photo-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:600px){.photo-grid{grid-template-columns:repeat(2,1fr)}}
-.photo-card{
-    aspect-ratio:1;border-radius:var(--radius);overflow:hidden;
-    cursor:pointer;position:relative;background:var(--bg-elevated);
-    transition:transform var(--transition-spring),box-shadow var(--transition)
-}
-.photo-card:hover{transform:scale(1.03);box-shadow:0 12px 32px rgba(0,0,0,0.08)}
-.photo-card img{width:100%;height:100%;object-fit:cover}
-.photo-card .ph-label{
-    position:absolute;bottom:8px;left:8px;font-size:0.64rem;
-    color:#fff;background:rgba(0,0,0,0.45);padding:2px 10px;
-    border-radius:10px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)
-}
+.skill-icon{font-size:1.5rem;display:block;margin-bottom:6px}
+.skill-name{font-size:0.84rem;font-weight:700;margin-bottom:2px}
+.skill-desc{font-size:0.68rem;color:var(--text-muted);line-height:1.55}
 
 /* ============================================
    AI CARDS
@@ -413,7 +402,7 @@ body::before{
 @media(max-width:600px){.ai-grid{grid-template-columns:1fr}}
 .ai-card{
     padding:28px 24px;display:flex;gap:18px;align-items:flex-start;
-    transition:transform var(--transition)
+    transition:transform var(--transition);border-radius:var(--radius)
 }
 .ai-card:hover{transform:translateY(-4px)}
 .ai-card-icon{font-size:2.2rem;flex-shrink:0;width:48px;text-align:center}
@@ -450,30 +439,115 @@ body::before{
 }
 .gallery-card:hover{border-color:var(--glass-border-hover);box-shadow:var(--glass-shadow-hover)}
 .gallery-card img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
-.gallery-label{display:block;padding:12px 18px;font-size:0.74rem;color:var(--text-muted);font-weight:500}
 @media(max-width:900px){.gallery-card{width:86vw}}
 .scroll-hint-bar{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:0.66rem;color:var(--text-muted)}
 .scroll-hint-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:dotPulse 1.5s ease infinite}
 @keyframes dotPulse{0%,100%{opacity:0.3}50%{opacity:1}}
 
 /* ============================================
-   LIGHTBOX
+   STAGE LIGHTBOX — 舞台灯光效果
    ============================================ */
 .lightbox{
-    position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.92);
+    position:fixed;inset:0;z-index:999;
     display:flex;align-items:center;justify-content:center;
-    opacity:0;pointer-events:none;transition:opacity 0.3s
+    opacity:0;pointer-events:none;transition:opacity 0.4s
 }
 .lightbox.open{opacity:1;pointer-events:auto}
-.lightbox-content{max-width:92vw;max-height:88vh;position:relative}
-.lightbox-content img{max-width:100%;max-height:88vh;border-radius:8px;object-fit:contain}
-.lightbox-close{
-    position:absolute;top:-40px;right:0;background:none;border:none;
-    color:#fff;font-size:1.6rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s
+.lightbox-backdrop{
+    position:absolute;inset:0;
+    background:rgba(0,0,0,0.94);
+    transition:background 0.4s
 }
-.lightbox-close:hover{opacity:1}
+.lightbox-spotlight{
+    position:absolute;width:70vmin;height:70vmin;border-radius:50%;
+    background:radial-gradient(ellipse 50% 50% at 50% 40%,
+        rgba(255,250,240,0.08) 0%,
+        rgba(255,245,235,0.04) 25%,
+        transparent 70%);
+    pointer-events:none;z-index:2;
+    transition:transform 0.3s ease-out;
+    transform:translate(-50%,-45%);
+    will-change:transform
+}
+.lightbox-stage{
+    position:relative;z-index:3;max-width:82vw;max-height:78vh;
+    display:flex;align-items:center;justify-content:center;
+    cursor:grab;user-select:none;-webkit-user-select:none;
+    touch-action:pan-y
+}
+.lightbox-stage:active{cursor:grabbing}
+.lightbox-stage img{
+    max-width:82vw;max-height:78vh;border-radius:12px;
+    object-fit:contain;
+    box-shadow:0 4px 60px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.06);
+    transition:transform 0.25s ease-out, opacity 0.25s;
+    pointer-events:none
+}
+.lightbox-stage img.swiping{transition:none}
+.lightbox-stage img.slide-out-left{
+    transform:translateX(-120%);opacity:0
+}
+.lightbox-stage img.slide-out-right{
+    transform:translateX(120%);opacity:0
+}
+.lightbox-stage img.slide-in-left{
+    transform:translateX(-80%);opacity:0
+}
+.lightbox-stage img.slide-in-right{
+    transform:translateX(80%);opacity:0
+}
+.lightbox-prev,.lightbox-next{
+    position:absolute;top:50%;transform:translateY(-50%);
+    background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);
+    color:#fff;font-size:2rem;width:48px;height:48px;
+    border-radius:50%;cursor:pointer;z-index:10;
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    transition:all 0.25s;display:flex;align-items:center;justify-content:center;
+    line-height:1;padding:0
+}
+.lightbox-prev:hover,.lightbox-next:hover{
+    background:rgba(255,255,255,0.16);border-color:rgba(255,255,255,0.25);
+    transform:translateY(-50%) scale(1.08)
+}
+.lightbox-prev:active,.lightbox-next:active{
+    transform:translateY(-50%) scale(0.92);
+    transition:transform var(--bounce)
+}
+.lightbox-prev{left:28px}
+.lightbox-next{right:28px}
+.lightbox-close{
+    position:absolute;top:28px;right:32px;z-index:10;
+    background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);
+    color:#fff;font-size:1.4rem;width:44px;height:44px;
+    border-radius:50%;cursor:pointer;
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    transition:all 0.25s;display:flex;align-items:center;justify-content:center;
+    line-height:1;padding:0
+}
+.lightbox-close:hover{background:rgba(255,255,255,0.16);border-color:rgba(255,255,255,0.25)}
+.lightbox-close:active{transform:scale(0.9);transition:transform var(--bounce)}
 .lightbox-caption{
-    text-align:center;color:rgba(255,255,255,0.7);font-size:0.82rem;margin-top:12px
+    position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+    z-index:10;color:rgba(255,255,255,0.55);font-size:0.82rem;
+    letter-spacing:0.06em;text-align:center
+}
+.lightbox-counter{
+    position:absolute;top:34px;left:50%;transform:translateX(-50%);
+    z-index:10;color:rgba(255,255,255,0.45);font-size:0.72rem;
+    letter-spacing:0.08em
+}
+.lightbox-arrow-hint{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:32px;height:32px;border-radius:50%;
+    opacity:0;pointer-events:none;
+    transition:opacity 0.3s
+}
+@media(max-width:768px){
+    .lightbox-prev{left:12px;width:40px;height:40px;font-size:1.6rem}
+    .lightbox-next{right:12px;width:40px;height:40px;font-size:1.6rem}
+    .lightbox-close{top:16px;right:16px;width:38px;height:38px;font-size:1.2rem}
+    .lightbox-counter{top:22px}
+    .lightbox-caption{bottom:16px;font-size:0.72rem}
 }
 
 /* ============================================
@@ -510,6 +584,7 @@ body::before{
 }
 #back-top.show{opacity:1;pointer-events:auto}
 #back-top:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px)}
+#back-top:active{transform:translateY(-3px) scale(0.9);transition:transform var(--bounce)}
 
 /* Cursor glow */
 .cursor-glow{
@@ -558,7 +633,7 @@ body::before{
 </section>
 
 <!-- ============================================
-     PROJECTS CAROUSEL — 横向动图滚动
+     PROJECTS CAROUSEL — 纯图横向跳动
      ============================================ -->
 <section class="projects-carousel-section" id="projects-carousel">
     <div class="projects-carousel-label"><span>精选项目</span></div>
@@ -572,24 +647,12 @@ body::before{
                     <div class="proj-carousel-img-wrap">
                         <img src="img/luocheng_page_01.webp" alt="乐山犍为县罗城片区" loading="lazy" />
                     </div>
-                    <div class="proj-carousel-overlay">
-                        <span class="proj-carousel-emoji">🗺️</span>
-                        <span class="proj-carousel-type">镇级国土空间规划</span>
-                        <h3 class="proj-carousel-name">乐山犍为县罗城片区</h3>
-                        <span class="proj-carousel-tag">乡村振兴</span>
-                    </div>
                 </div>
             </div>
             <div class="proj-carousel-card magnetic" data-target="project-2" data-key="lizhou">
                 <div class="proj-carousel-glass">
                     <div class="proj-carousel-img-wrap">
                         <img src="img/lizhou_page_01.webp" alt="礼州农旅融合发展片区" loading="lazy" />
-                    </div>
-                    <div class="proj-carousel-overlay">
-                        <span class="proj-carousel-emoji">🧭</span>
-                        <span class="proj-carousel-type">国土空间规划</span>
-                        <h3 class="proj-carousel-name">礼州农旅融合发展片区</h3>
-                        <span class="proj-carousel-tag">农旅融合</span>
                     </div>
                 </div>
             </div>
@@ -598,24 +661,12 @@ body::before{
                     <div class="proj-carousel-img-wrap">
                         <img src="img/yangshan_page_01.webp" alt="桂阳县阳山村" loading="lazy" />
                     </div>
-                    <div class="proj-carousel-overlay">
-                        <span class="proj-carousel-emoji">🏛️</span>
-                        <span class="proj-carousel-type">「多规合一」村庄规划</span>
-                        <h3 class="proj-carousel-name">桂阳县阳山村</h3>
-                        <span class="proj-carousel-tag">历史文化</span>
-                    </div>
                 </div>
             </div>
             <div class="proj-carousel-card magnetic" data-target="project-4" data-key="gaiban">
                 <div class="proj-carousel-glass">
                     <div class="proj-carousel-img-wrap">
                         <img src="img/gaiban_page_01.webp" alt="嘉阳小火车文旅生态片区" loading="lazy" />
-                    </div>
-                    <div class="proj-carousel-overlay">
-                        <span class="proj-carousel-emoji">🚂</span>
-                        <span class="proj-carousel-type">国土空间规划</span>
-                        <h3 class="proj-carousel-name">嘉阳小火车文旅生态片区</h3>
-                        <span class="proj-carousel-tag">文旅融合</span>
                     </div>
                 </div>
             </div>
@@ -674,9 +725,9 @@ body::before{
 </div>
 
 <!-- ============================================
-     SKILLS
+     SKILLS — compact
      ============================================ -->
-<section class="section" id="skills">
+<section class="skills-section" id="skills">
     <div class="container">
         <div class="section-label">能力矩阵</div>
         <h2 class="section-title">跨界技术能力</h2>
@@ -685,32 +736,32 @@ body::before{
             <div class="skill-card glass-card magnetic">
                 <span class="skill-icon">🗺️</span>
                 <div class="skill-name">空间规划</div>
-                <div class="skill-desc">国土空间总体规划<br/>GIS / CAD / PS</div>
+                <div class="skill-desc">国土空间总体规划 · GIS / CAD / PS</div>
             </div>
             <div class="skill-card glass-card magnetic">
                 <span class="skill-icon">🎯</span>
                 <div class="skill-name">文旅定制</div>
-                <div class="skill-desc">出境游全案设计<br/>天猫店铺运营</div>
+                <div class="skill-desc">出境游全案设计 · 天猫店铺运营</div>
             </div>
             <div class="skill-card glass-card magnetic">
                 <span class="skill-icon">🚁</span>
                 <div class="skill-name">无人机飞手</div>
-                <div class="skill-desc">航拍与空间采集<br/>超视距飞行</div>
+                <div class="skill-desc">航拍与空间采集 · 超视距飞行</div>
             </div>
             <div class="skill-card glass-card magnetic">
                 <span class="skill-icon">📱</span>
                 <div class="skill-name">手机摄影</div>
-                <div class="skill-desc">光影构图达人<br/>人文与风光</div>
+                <div class="skill-desc">光影构图达人 · 人文与风光</div>
             </div>
             <div class="skill-card glass-card magnetic">
                 <span class="skill-icon">🤖</span>
                 <div class="skill-name">AI工作流</div>
-                <div class="skill-desc">WorkBuddy / Gemini<br/>自动化部署</div>
+                <div class="skill-desc">WorkBuddy / Gemini · 自动化部署</div>
             </div>
             <div class="skill-card glass-card magnetic">
                 <span class="skill-icon">📊</span>
                 <div class="skill-name">汇报呈现</div>
-                <div class="skill-desc">PPT排版美化<br/>文案与时政分析</div>
+                <div class="skill-desc">PPT排版美化 · 文案与时政分析</div>
             </div>
         </div>
     </div>
@@ -1130,29 +1181,12 @@ body::before{
     </div>
     <p class="photo-ball-hint">
         <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="2" fill="var(--accent)"/><circle cx="7" cy="7" r="6" fill="none" stroke="var(--accent)" stroke-width="1" opacity="0.3"/></svg>
-        任意方向拖拽旋转 · 点击放大
+        任意方向拖拽旋转 · 点击放大 · 左右滑动切换
     </p>
     <div class="photo-ball-tabs">
         <button class="photo-ball-tab active" onclick="filterPhotoBall('all',this)">全部 80</button>
         <button class="photo-ball-tab" onclick="filterPhotoBall('人文',this)">人文 70</button>
         <button class="photo-ball-tab" onclick="filterPhotoBall('风光',this)">风光 10</button>
-    </div>
-</section>
-
-<!-- ============================================
-     PHOTOS GRID
-     ============================================ -->
-<section class="section" id="photos-grid-section">
-    <div class="container">
-        <div class="section-label">全部作品</div>
-        <h2 class="section-title">摄影画廊</h2>
-        <p class="section-desc">浏览全部 80 张摄影作品。</p>
-        <div class="photo-tabs">
-            <button class="photo-tab active" onclick="filterPhotos('all',this)">全部</button>
-            <button class="photo-tab" onclick="filterPhotos('人文',this)">人文</button>
-            <button class="photo-tab" onclick="filterPhotos('风光',this)">风光</button>
-        </div>
-        <div class="photo-grid" id="photo-grid"></div>
     </div>
 </section>
 
@@ -1216,28 +1250,22 @@ body::before{
             <div class="gallery-scroll-wrap" id="gallery-1">
                 <div class="gallery-scroll-track">
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/luocheng_page_01.webp')">
-                        <img src="img/luocheng_page_01.webp" alt="乐山犍为县罗城片区 — 封面" loading="lazy" />
-                        <span class="gallery-label">封面</span>
+                        <img src="img/luocheng_page_01.webp" alt="乐山犍为县罗城片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/luocheng_page_09.webp')">
-                        <img src="img/luocheng_page_09.webp" alt="乐山犍为县罗城片区 — 调研分析" loading="lazy" />
-                        <span class="gallery-label">调研分析</span>
+                        <img src="img/luocheng_page_09.webp" alt="乐山犍为县罗城片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/luocheng_page_17.webp')">
-                        <img src="img/luocheng_page_17.webp" alt="乐山犍为县罗城片区 — 文化挖掘" loading="lazy" />
-                        <span class="gallery-label">文化挖掘</span>
+                        <img src="img/luocheng_page_17.webp" alt="乐山犍为县罗城片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/luocheng_page_25.webp')">
-                        <img src="img/luocheng_page_25.webp" alt="乐山犍为县罗城片区 — 规划方案" loading="lazy" />
-                        <span class="gallery-label">规划方案</span>
+                        <img src="img/luocheng_page_25.webp" alt="乐山犍为县罗城片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/luocheng_page_33.webp')">
-                        <img src="img/luocheng_page_33.webp" alt="乐山犍为县罗城片区 — 产业布局" loading="lazy" />
-                        <span class="gallery-label">产业布局</span>
+                        <img src="img/luocheng_page_33.webp" alt="乐山犍为县罗城片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/luocheng_page_41.webp')">
-                        <img src="img/luocheng_page_41.webp" alt="乐山犍为县罗城片区 — 风貌分区" loading="lazy" />
-                        <span class="gallery-label">风貌分区</span>
+                        <img src="img/luocheng_page_41.webp" alt="乐山犍为县罗城片区" loading="lazy" />
                     </div></div>
                 <div class="scroll-hint-bar"><span class="scroll-hint-dot"></span> 拖动浏览</div>
             </div>
@@ -1252,28 +1280,22 @@ body::before{
             <div class="gallery-scroll-wrap" id="gallery-2">
                 <div class="gallery-scroll-track">
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/lizhou_page_01.webp')">
-                        <img src="img/lizhou_page_01.webp" alt="礼州农旅融合发展片区 — 封面" loading="lazy" />
-                        <span class="gallery-label">封面</span>
+                        <img src="img/lizhou_page_01.webp" alt="礼州农旅融合发展片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/lizhou_page_17.webp')">
-                        <img src="img/lizhou_page_17.webp" alt="礼州农旅融合发展片区 — 交通区位" loading="lazy" />
-                        <span class="gallery-label">交通区位</span>
+                        <img src="img/lizhou_page_17.webp" alt="礼州农旅融合发展片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/lizhou_page_33.webp')">
-                        <img src="img/lizhou_page_33.webp" alt="礼州农旅融合发展片区 — 居住环境" loading="lazy" />
-                        <span class="gallery-label">居住环境</span>
+                        <img src="img/lizhou_page_33.webp" alt="礼州农旅融合发展片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/lizhou_page_73.webp')">
-                        <img src="img/lizhou_page_73.webp" alt="礼州农旅融合发展片区 — 产业布局" loading="lazy" />
-                        <span class="gallery-label">产业布局</span>
+                        <img src="img/lizhou_page_73.webp" alt="礼州农旅融合发展片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/lizhou_page_89.webp')">
-                        <img src="img/lizhou_page_89.webp" alt="礼州农旅融合发展片区 — 滨水步道" loading="lazy" />
-                        <span class="gallery-label">滨水步道</span>
+                        <img src="img/lizhou_page_89.webp" alt="礼州农旅融合发展片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/lizhou_page_97.webp')">
-                        <img src="img/lizhou_page_97.webp" alt="礼州农旅融合发展片区 — 建筑风貌" loading="lazy" />
-                        <span class="gallery-label">建筑风貌</span>
+                        <img src="img/lizhou_page_97.webp" alt="礼州农旅融合发展片区" loading="lazy" />
                     </div></div>
                 <div class="scroll-hint-bar"><span class="scroll-hint-dot"></span> 拖动浏览</div>
             </div>
@@ -1288,28 +1310,22 @@ body::before{
             <div class="gallery-scroll-wrap" id="gallery-3">
                 <div class="gallery-scroll-track">
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/yangshan_page_01.webp')">
-                        <img src="img/yangshan_page_01.webp" alt="桂阳县阳山村 — 封面" loading="lazy" />
-                        <span class="gallery-label">封面</span>
+                        <img src="img/yangshan_page_01.webp" alt="桂阳县阳山村" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/yangshan_page_25.webp')">
-                        <img src="img/yangshan_page_25.webp" alt="桂阳县阳山村 — 农田植被" loading="lazy" />
-                        <span class="gallery-label">农田植被</span>
+                        <img src="img/yangshan_page_25.webp" alt="桂阳县阳山村" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/yangshan_page_33.webp')">
-                        <img src="img/yangshan_page_33.webp" alt="桂阳县阳山村 — 历史文化" loading="lazy" />
-                        <span class="gallery-label">历史文化</span>
+                        <img src="img/yangshan_page_33.webp" alt="桂阳县阳山村" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/yangshan_page_73.webp')">
-                        <img src="img/yangshan_page_73.webp" alt="桂阳县阳山村 — 产业规划" loading="lazy" />
-                        <span class="gallery-label">产业规划</span>
+                        <img src="img/yangshan_page_73.webp" alt="桂阳县阳山村" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/yangshan_page_89.webp')">
-                        <img src="img/yangshan_page_89.webp" alt="桂阳县阳山村 — 效果图" loading="lazy" />
-                        <span class="gallery-label">效果图</span>
+                        <img src="img/yangshan_page_89.webp" alt="桂阳县阳山村" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/yangshan_page_121.webp')">
-                        <img src="img/yangshan_page_121.webp" alt="桂阳县阳山村 — 规划实施" loading="lazy" />
-                        <span class="gallery-label">规划实施</span>
+                        <img src="img/yangshan_page_121.webp" alt="桂阳县阳山村" loading="lazy" />
                     </div></div>
                 <div class="scroll-hint-bar"><span class="scroll-hint-dot"></span> 拖动浏览</div>
             </div>
@@ -1324,28 +1340,22 @@ body::before{
             <div class="gallery-scroll-wrap" id="gallery-4">
                 <div class="gallery-scroll-track">
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/gaiban_page_01.webp')">
-                        <img src="img/gaiban_page_01.webp" alt="嘉阳小火车文旅生态片区 — 封面" loading="lazy" />
-                        <span class="gallery-label">封面</span>
+                        <img src="img/gaiban_page_01.webp" alt="嘉阳小火车文旅生态片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/gaiban_page_21.webp')">
-                        <img src="img/gaiban_page_21.webp" alt="嘉阳小火车文旅生态片区 — 工业文化" loading="lazy" />
-                        <span class="gallery-label">工业文化</span>
+                        <img src="img/gaiban_page_21.webp" alt="嘉阳小火车文旅生态片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/gaiban_page_31.webp')">
-                        <img src="img/gaiban_page_31.webp" alt="嘉阳小火车文旅生态片区 — 旅游分析" loading="lazy" />
-                        <span class="gallery-label">旅游分析</span>
+                        <img src="img/gaiban_page_31.webp" alt="嘉阳小火车文旅生态片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/gaiban_page_81.webp')">
-                        <img src="img/gaiban_page_81.webp" alt="嘉阳小火车文旅生态片区 — 产业赋能" loading="lazy" />
-                        <span class="gallery-label">产业赋能</span>
+                        <img src="img/gaiban_page_81.webp" alt="嘉阳小火车文旅生态片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/gaiban_page_101.webp')">
-                        <img src="img/gaiban_page_101.webp" alt="嘉阳小火车文旅生态片区 — 风貌分区" loading="lazy" />
-                        <span class="gallery-label">风貌分区</span>
+                        <img src="img/gaiban_page_101.webp" alt="嘉阳小火车文旅生态片区" loading="lazy" />
                     </div>
                     <div class="gallery-card magnetic" onclick="disperseAndGo(this, event, 'img/gaiban_page_131.webp')">
-                        <img src="img/gaiban_page_131.webp" alt="嘉阳小火车文旅生态片区 — 文保" loading="lazy" />
-                        <span class="gallery-label">文保</span>
+                        <img src="img/gaiban_page_131.webp" alt="嘉阳小火车文旅生态片区" loading="lazy" />
                     </div></div>
                 <div class="scroll-hint-bar"><span class="scroll-hint-dot"></span> 拖动浏览</div>
             </div>
@@ -1371,17 +1381,24 @@ body::before{
 
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-    <div class="lightbox-content" onclick="event.stopPropagation()">
-        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-        <img id="lightbox-img" src="" alt="" />
-        <div class="lightbox-caption" id="lightbox-caption"></div>
+<!-- ============================================
+     STAGE LIGHTBOX — 舞台灯光灯箱
+     ============================================ -->
+<div class="lightbox" id="lightbox">
+    <div class="lightbox-backdrop" onclick="closeLightbox()"></div>
+    <div class="lightbox-spotlight" id="lightbox-spotlight"></div>
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="关闭">&times;</button>
+    <button class="lightbox-prev" id="lightbox-prev" onclick="lightboxNavigate(-1)" aria-label="上一张">&lsaquo;</button>
+    <div class="lightbox-stage" id="lightbox-stage">
+        <img id="lightbox-img" src="" alt="" draggable="false" />
     </div>
+    <button class="lightbox-next" id="lightbox-next" onclick="lightboxNavigate(1)" aria-label="下一张">&rsaquo;</button>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
 </div>
 
 <script>
-var photoData = [{"category": "\u4eba\u6587", "filename": "landscape_002.webp", "thumb": "thumb_landscape_002.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_005.webp", "thumb": "thumb_landscape_005.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_006.webp", "thumb": "thumb_landscape_006.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_007.webp", "thumb": "thumb_landscape_007.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_008.webp", "thumb": "thumb_landscape_008.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_010.webp", "thumb": "thumb_landscape_010.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_012.webp", "thumb": "thumb_landscape_012.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_013.webp", "thumb": "thumb_landscape_013.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_014.webp", "thumb": "thumb_landscape_014.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_015.webp", "thumb": "thumb_landscape_015.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_017.webp", "thumb": "thumb_landscape_017.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_018.webp", "thumb": "thumb_landscape_018.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_019.webp", "thumb": "thumb_landscape_019.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_020.webp", "thumb": "thumb_landscape_020.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_021.webp", "thumb": "thumb_landscape_021.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_022.webp", "thumb": "thumb_landscape_022.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_023.webp", "thumb": "thumb_landscape_023.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_024.webp", "thumb": "thumb_landscape_024.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_025.webp", "thumb": "thumb_landscape_025.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_026.webp", "thumb": "thumb_landscape_026.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_027.webp", "thumb": "thumb_landscape_027.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_028.webp", "thumb": "thumb_landscape_028.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_029.webp", "thumb": "thumb_landscape_029.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_030.webp", "thumb": "thumb_landscape_030.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_031.webp", "thumb": "thumb_landscape_031.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_032.webp", "thumb": "thumb_landscape_032.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_033.webp", "thumb": "thumb_landscape_033.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_034.webp", "thumb": "thumb_landscape_034.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_035.webp", "thumb": "thumb_landscape_035.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_036.webp", "thumb": "thumb_landscape_036.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_037.webp", "thumb": "thumb_landscape_037.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_038.webp", "thumb": "thumb_landscape_038.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_039.webp", "thumb": "thumb_landscape_039.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_040.webp", "thumb": "thumb_landscape_040.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_003.webp", "thumb": "thumb_portrait_003.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_004.webp", "thumb": "thumb_portrait_004.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_005.webp", "thumb": "thumb_portrait_005.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_006.webp", "thumb": "thumb_portrait_006.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_007.webp", "thumb": "thumb_portrait_007.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_008.webp", "thumb": "thumb_portrait_008.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_009.webp", "thumb": "thumb_portrait_009.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_010.webp", "thumb": "thumb_portrait_010.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_011.webp", "thumb": "thumb_portrait_011.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_012.webp", "thumb": "thumb_portrait_012.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_013.webp", "thumb": "thumb_portrait_013.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_014.webp", "thumb": "thumb_portrait_014.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_015.webp", "thumb": "thumb_portrait_015.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_016.webp", "thumb": "thumb_portrait_016.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_017.webp", "thumb": "thumb_portrait_017.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_018.webp", "thumb": "thumb_portrait_018.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_019.webp", "thumb": "thumb_portrait_019.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_021.webp", "thumb": "thumb_portrait_021.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_022.webp", "thumb": "thumb_portrait_022.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_023.webp", "thumb": "thumb_portrait_023.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_024.webp", "thumb": "thumb_portrait_024.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_025.webp", "thumb": "thumb_portrait_025.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_026.webp", "thumb": "thumb_portrait_026.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_027.webp", "thumb": "thumb_portrait_027.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_028.webp", "thumb": "thumb_portrait_028.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_029.webp", "thumb": "thumb_portrait_029.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_030.webp", "thumb": "thumb_portrait_030.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_032.webp", "thumb": "thumb_portrait_032.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_033.webp", "thumb": "thumb_portrait_033.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_034.webp", "thumb": "thumb_portrait_034.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_035.webp", "thumb": "thumb_portrait_035.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_036.webp", "thumb": "thumb_portrait_036.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_037.webp", "thumb": "thumb_portrait_037.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_038.webp", "thumb": "thumb_portrait_038.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_039.webp", "thumb": "thumb_portrait_039.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_040.webp", "thumb": "thumb_portrait_040.webp", "label": "\u4eba\u6587"}, {"category": "\u98ce\u5149", "filename": "landscape_001.webp", "thumb": "thumb_landscape_001.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "landscape_003.webp", "thumb": "thumb_landscape_003.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "landscape_004.webp", "thumb": "thumb_landscape_004.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "landscape_009.webp", "thumb": "thumb_landscape_009.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "landscape_011.webp", "thumb": "thumb_landscape_011.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "landscape_016.webp", "thumb": "thumb_landscape_016.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "portrait_001.webp", "thumb": "thumb_portrait_001.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "portrait_002.webp", "thumb": "thumb_portrait_002.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "portrait_020.webp", "thumb": "thumb_portrait_020.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "portrait_031.webp", "thumb": "thumb_portrait_031.webp", "label": "\u98ce\u5149"}];
+var photoData = [{"category": "\u4eba\u6587", "filename": "landscape_002.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_005.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_006.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_007.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_008.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_010.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_012.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_013.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_014.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_015.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_017.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_018.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_019.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_020.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_021.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_022.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_023.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_024.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_025.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_026.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_027.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_028.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_029.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_030.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_031.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_032.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_033.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_034.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_035.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_036.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_037.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_038.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_039.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "landscape_040.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_003.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_004.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_005.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_006.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_007.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_008.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_009.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_010.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_011.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_012.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_013.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_014.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_015.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_016.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_017.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_018.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_019.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_021.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_022.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_023.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_024.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_025.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_026.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_027.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_028.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_029.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_030.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_032.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_033.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_034.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_035.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_036.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_037.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_038.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_039.webp", "label": "\u4eba\u6587"}, {"category": "\u4eba\u6587", "filename": "portrait_040.webp", "label": "\u4eba\u6587"}, {"category": "\u98ce\u5149", "filename": "landscape_001.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "landscape_003.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "landscape_004.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "landscape_009.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "landscape_011.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "landscape_016.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "portrait_001.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "portrait_002.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "portrait_020.webp", "label": "\u98ce\u5149"}, {"category": "\u98ce\u5149", "filename": "portrait_031.webp", "label": "\u98ce\u5149"}];
 
 /* ============================================
    CURSOR GLOW
@@ -1418,7 +1435,7 @@ document.querySelectorAll('.magnetic').forEach(function(card){
 });
 
 /* ============================================
-   PROJECTS CAROUSEL — horizontal auto-scroll
+   PROJECTS CAROUSEL — 5秒间隔跳动
    ============================================ */
 (function(){
     var wrap = document.getElementById('projects-carousel-wrap');
@@ -1427,11 +1444,11 @@ document.querySelectorAll('.magnetic').forEach(function(card){
     var dots = document.querySelectorAll('.proj-carousel-dot');
     var cardCount = cards.length;
 
-    var scrollSpeed = 0.6;
     var autoScrolling = true;
     var isHovering = false;
     var isDragging = false;
     var dragStartX = 0, dragStartScroll = 0;
+    var autoInterval = null;
 
     wrap.addEventListener('mouseenter', function(){ isHovering = true; });
     wrap.addEventListener('mouseleave', function(){ isHovering = false; });
@@ -1451,7 +1468,7 @@ document.querySelectorAll('.magnetic').forEach(function(card){
         if (isDragging){
             isDragging = false;
             wrap.classList.remove('dragging');
-            setTimeout(function(){ autoScrolling = true; }, 2000);
+            setTimeout(function(){ autoScrolling = true; updateActiveDot(); }, 2500);
         }
     });
     /* Touch drag */
@@ -1468,27 +1485,37 @@ document.querySelectorAll('.magnetic').forEach(function(card){
         if (isDragging){
             isDragging = false;
             wrap.classList.remove('dragging');
-            setTimeout(function(){ autoScrolling = true; }, 2000);
+            setTimeout(function(){ autoScrolling = true; updateActiveDot(); }, 2500);
         }
     });
 
-    /* Auto-scroll loop */
-    function autoScroll(){
-        if (autoScrolling && !isHovering && !isDragging){
-            wrap.scrollLeft += scrollSpeed;
-            /* Loop: clone track for seamless infinite scroll */
-            if (wrap.scrollLeft >= track.scrollWidth - wrap.clientWidth - 10){
-                wrap.scrollLeft = 0;
-            }
-        }
-        /* Update active dot */
-        var cardWidth = cards[0] ? cards[0].offsetWidth + 20 : 360; /* card width + gap */
+    /* Update active dot based on scroll position */
+    function updateActiveDot(){
+        var cardWidth = cards[0] ? cards[0].offsetWidth + 20 : 440;
         var activeIdx = Math.round(wrap.scrollLeft / cardWidth);
-        if (activeIdx >= cardCount) activeIdx = 0;
+        if (activeIdx >= cardCount) activeIdx = cardCount - 1;
+        if (activeIdx < 0) activeIdx = 0;
         dots.forEach(function(d, i){ d.classList.toggle('active', i === activeIdx); });
-        requestAnimationFrame(autoScroll);
     }
-    requestAnimationFrame(autoScroll);
+
+    /* 5-second auto-advance */
+    function startAutoAdvance(){
+        if (autoInterval) clearInterval(autoInterval);
+        autoInterval = setInterval(function(){
+            if (!autoScrolling || isHovering || isDragging) return;
+            var cardWidth = cards[0] ? cards[0].offsetWidth + 20 : 440;
+            var currentIdx = Math.round(wrap.scrollLeft / cardWidth);
+            var nextIdx = currentIdx + 1;
+            if (nextIdx >= cardCount) nextIdx = 0;
+            wrap.scrollTo({left: nextIdx * cardWidth, behavior: 'smooth'});
+            updateActiveDot();
+        }, 5000);
+    }
+
+    /* Watch scroll for dot update */
+    wrap.addEventListener('scroll', function(){
+        if (!isDragging) updateActiveDot();
+    });
 
     /* Card click → navigate to detail */
     cards.forEach(function(card){
@@ -1504,12 +1531,14 @@ document.querySelectorAll('.magnetic').forEach(function(card){
     dots.forEach(function(dot){
         dot.addEventListener('click', function(){
             var idx = parseInt(this.dataset.idx);
-            var cardWidth = cards[0] ? cards[0].offsetWidth + 20 : 360;
+            var cardWidth = cards[0] ? cards[0].offsetWidth + 20 : 440;
             wrap.scrollTo({left: idx * cardWidth, behavior:'smooth'});
             autoScrolling = false;
-            setTimeout(function(){ autoScrolling = true; }, 3000);
+            setTimeout(function(){ autoScrolling = true; updateActiveDot(); }, 3000);
         });
     });
+
+    startAutoAdvance();
 })();
 
 /* ============================================
@@ -1534,7 +1563,6 @@ function disperseAndGo(el, e, imgSrc){
     var cy = rect.top + rect.height / 2;
     var w = rect.width, h = rect.height;
 
-    var target = el.closest('.project-detail');
     var galleryWrap = el.closest('.gallery-scroll-wrap');
 
     particles = [];
@@ -1602,9 +1630,8 @@ function disperseAndGo(el, e, imgSrc){
     /* ── Sphere params ── */
     var R = 520;
     var cardW = 90;
-    var cardH = 90;
-    if (window.innerWidth < 768) { R = 380; cardW = 68; cardH = 68; }
-    if (window.innerWidth < 480) { R = 300; cardW = 54; cardH = 54; }
+    if (window.innerWidth < 768) { R = 380; cardW = 68; }
+    if (window.innerWidth < 480) { R = 300; cardW = 54; }
 
     /* ── Fibonacci sphere distribution ── */
     var cardData = [];
@@ -1660,7 +1687,6 @@ function disperseAndGo(el, e, imgSrc){
         if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragMoved = true;
         targetRotY = dragStartRotY + dx * 0.35;
         targetRotX = dragStartRotX - dy * 0.35;
-        /* Clamp X rotation */
         targetRotX = Math.max(-80, Math.min(80, targetRotX));
     });
     document.addEventListener('mouseup', function(){
@@ -1705,14 +1731,20 @@ function disperseAndGo(el, e, imgSrc){
         }
     }, 16);
 
-    /* Card click → lightbox */
+    /* Card click → open stage lightbox with navigation */
     ballCards.forEach(function(card){
         card.addEventListener('click', function(e){
             if (dragMoved) return;
-            var img = this.querySelector('img');
-            if (img){
-                openLightbox(img.src, this.dataset.cat);
-            }
+            var cat = this.dataset.cat;
+            /* Get all visible photos in current filter */
+            var visibleCards = [];
+            ballCards.forEach(function(c, i){
+                if (c.style.display !== 'none'){
+                    visibleCards.push(i);
+                }
+            });
+            var idx = visibleCards.indexOf(parseInt(this.dataset.idx));
+            openStageLightbox(visibleCards, idx >= 0 ? idx : 0);
         });
     });
 
@@ -1751,45 +1783,166 @@ function disperseAndGo(el, e, imgSrc){
 })();
 
 /* ============================================
-   PHOTOS GRID
+   STAGE LIGHTBOX — 舞台灯光 + 左右滑动
    ============================================ */
-var catNames = {'人文': '人文', '风光': '风光'};
-function filterPhotos(cat, btn){
-    document.querySelectorAll('.photo-tab').forEach(function(t){ t.classList.remove('active'); });
-    btn.classList.add('active');
-    var grid = document.getElementById('photo-grid');
-    var filtered = cat === 'all' ? photoData : photoData.filter(function(p){ return p.category === cat; });
-    if (cat === 'all'){
-        var p1 = photoData.filter(function(p){ return p.category === '人文'; });
-        var p2 = photoData.filter(function(p){ return p.category === '风光'; });
-        filtered = [];
-        for (var i = 0; i < Math.max(p1.length, p2.length); i++){
-            if (i < p1.length) filtered.push(p1[i]);
-            if (i < p2.length) filtered.push(p2[i]);
-        }
-    }
-    grid.innerHTML = filtered.map(function(ph){
-        return '<div class="photo-card" onclick="openLightbox(\'img/photos/' + ph.category + '/' + ph.filename + '\', \'' + (catNames[ph.category]||ph.category) + '\')">'
-            + '<img src="img/photos/' + ph.category + '/' + ph.filename + '" loading="lazy" alt="" />'
-            + '<span class="ph-label">' + (catNames[ph.category]||ph.category) + '</span></div>';
-    }).join('');
-}
-filterPhotos('all', document.querySelector('.photo-tab'));
+var lbOpen = false;
+var lbPhotoList = [];
+var lbCurrentIdx = 0;
+var lbImg = document.getElementById('lightbox-img');
+var lbStage = document.getElementById('lightbox-stage');
+var lbSpotlight = document.getElementById('lightbox-spotlight');
+var lbCaption = document.getElementById('lightbox-caption');
+var lbCounter = document.getElementById('lightbox-counter');
+var lbPrev = document.getElementById('lightbox-prev');
+var lbNext = document.getElementById('lightbox-next');
 
-/* ============================================
-   LIGHTBOX
-   ============================================ */
-function openLightbox(src, caption){
-    document.getElementById('lightbox-img').src = src;
-    document.getElementById('lightbox-caption').textContent = caption || '';
+/* Open lightbox with a list of photo indices and current index */
+function openStageLightbox(photoIndices, currentIdx){
+    lbPhotoList = photoIndices;
+    lbCurrentIdx = currentIdx;
+    lbOpen = true;
+    updateLightboxImage();
     document.getElementById('lightbox').classList.add('open');
     document.body.style.overflow = 'hidden';
+    updateNavButtons();
+    /* Center spotlight */
+    lbSpotlight.style.transform = 'translate(-50%,-45%)';
 }
+
 function closeLightbox(){
+    lbOpen = false;
     document.getElementById('lightbox').classList.remove('open');
     document.body.style.overflow = '';
 }
-document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeLightbox(); });
+
+function updateLightboxImage(){
+    var pi = lbPhotoList[lbCurrentIdx];
+    var ph = photoData[pi];
+    if (!ph) return;
+    var src = 'img/photos/' + ph.category + '/' + ph.filename;
+    lbImg.src = src;
+    lbCaption.textContent = ph.label || ph.category;
+    lbCounter.textContent = (lbCurrentIdx + 1) + ' / ' + lbPhotoList.length;
+    /* Remove any transition classes */
+    lbImg.classList.remove('slide-out-left','slide-out-right','slide-in-left','slide-in-right','swiping');
+    lbImg.style.transform = '';
+    lbImg.style.opacity = '1';
+}
+
+function lightboxNavigate(direction){
+    if (!lbOpen || lbPhotoList.length <= 1) return;
+    var oldIdx = lbCurrentIdx;
+    lbCurrentIdx += direction;
+    if (lbCurrentIdx < 0) lbCurrentIdx = lbPhotoList.length - 1;
+    if (lbCurrentIdx >= lbPhotoList.length) lbCurrentIdx = 0;
+    if (lbCurrentIdx === oldIdx) return;
+
+    /* Slide animation */
+    var slideClass = direction > 0 ? 'slide-out-left' : 'slide-out-right';
+    lbImg.classList.add(slideClass);
+
+    setTimeout(function(){
+        var pi = lbPhotoList[lbCurrentIdx];
+        var ph = photoData[pi];
+        if (!ph) return;
+        var src = 'img/photos/' + ph.category + '/' + ph.filename;
+        lbImg.src = src;
+        lbCaption.textContent = ph.label || ph.category;
+        lbCounter.textContent = (lbCurrentIdx + 1) + ' / ' + lbPhotoList.length;
+        lbImg.classList.remove(slideClass);
+        var enterClass = direction > 0 ? 'slide-in-right' : 'slide-in-left';
+        lbImg.classList.add(enterClass);
+        /* Force reflow */
+        void lbImg.offsetWidth;
+        lbImg.classList.remove(enterClass);
+        lbImg.style.transform = '';
+        lbImg.style.opacity = '1';
+    }, 200);
+
+    updateNavButtons();
+}
+
+function updateNavButtons(){
+    lbPrev.style.opacity = lbPhotoList.length > 1 ? '1' : '0.3';
+    lbNext.style.opacity = lbPhotoList.length > 1 ? '1' : '0.3';
+    lbPrev.style.pointerEvents = lbPhotoList.length > 1 ? 'auto' : 'none';
+    lbNext.style.pointerEvents = lbPhotoList.length > 1 ? 'auto' : 'none';
+}
+
+/* ── Swipe / drag support on stage ── */
+var lbSwipeStart = 0, lbSwipeX = 0, lbSwiping = false, lbSwipeMoved = false;
+lbStage.addEventListener('mousedown', function(e){
+    if (!lbOpen || lbPhotoList.length <= 1) return;
+    lbSwiping = true; lbSwipeMoved = false;
+    lbSwipeStart = e.clientX; lbSwipeX = 0;
+    lbImg.classList.add('swiping');
+    lbImg.style.transition = 'none';
+});
+document.addEventListener('mousemove', function(e){
+    if (!lbSwiping) return;
+    lbSwipeX = e.clientX - lbSwipeStart;
+    if (Math.abs(lbSwipeX) > 5) lbSwipeMoved = true;
+    lbImg.style.transform = 'translateX(' + lbSwipeX + 'px)';
+    lbImg.style.opacity = Math.max(0.3, 1 - Math.abs(lbSwipeX) / 200);
+});
+document.addEventListener('mouseup', function(){
+    if (!lbSwiping) return;
+    lbSwiping = false;
+    lbImg.classList.remove('swiping');
+    lbImg.style.transition = '';
+    if (Math.abs(lbSwipeX) > 50 && lbSwipeMoved){
+        lightboxNavigate(lbSwipeX < 0 ? 1 : -1);
+    } else {
+        lbImg.style.transform = '';
+        lbImg.style.opacity = '1';
+    }
+});
+
+/* Touch swipe */
+lbStage.addEventListener('touchstart', function(e){
+    if (!lbOpen || lbPhotoList.length <= 1) return;
+    lbSwiping = true; lbSwipeMoved = false;
+    lbSwipeStart = e.touches[0].clientX; lbSwipeX = 0;
+    lbImg.classList.add('swiping');
+    lbImg.style.transition = 'none';
+});
+document.addEventListener('touchmove', function(e){
+    if (!lbSwiping) return;
+    lbSwipeX = e.touches[0].clientX - lbSwipeStart;
+    if (Math.abs(lbSwipeX) > 5) lbSwipeMoved = true;
+    lbImg.style.transform = 'translateX(' + lbSwipeX + 'px)';
+    lbImg.style.opacity = Math.max(0.3, 1 - Math.abs(lbSwipeX) / 200);
+});
+document.addEventListener('touchend', function(){
+    if (!lbSwiping) return;
+    lbSwiping = false;
+    lbImg.classList.remove('swiping');
+    lbImg.style.transition = '';
+    if (Math.abs(lbSwipeX) > 50 && lbSwipeMoved){
+        lightboxNavigate(lbSwipeX < 0 ? 1 : -1);
+    } else {
+        lbImg.style.transform = '';
+        lbImg.style.opacity = '1';
+    }
+});
+
+/* ── Spotlight follows mouse ── */
+document.addEventListener('mousemove', function(e){
+    if (!lbOpen) return;
+    var x = e.clientX / window.innerWidth;
+    var y = e.clientY / window.innerHeight;
+    var tx = (x - 0.5) * 30;
+    var ty = (y - 0.5) * 30;
+    lbSpotlight.style.transform = 'translate(calc(-50% + ' + tx + 'px), calc(-45% + ' + ty + 'px))';
+});
+
+/* ── Keyboard navigation ── */
+document.addEventListener('keydown', function(e){
+    if (!lbOpen) return;
+    if (e.key === 'Escape') { closeLightbox(); return; }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); lightboxNavigate(-1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); lightboxNavigate(1); }
+});
 
 /* ============================================
    NAV SCROLL HIGHLIGHT + BACK TO TOP
