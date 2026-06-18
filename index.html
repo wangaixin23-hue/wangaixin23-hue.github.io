@@ -459,14 +459,16 @@ body::before{
     transition:background 0.4s
 }
 .lightbox-spotlight{
-    position:absolute;width:70vmin;height:70vmin;border-radius:50%;
-    background:radial-gradient(ellipse 50% 50% at 50% 40%,
-        rgba(255,250,240,0.08) 0%,
-        rgba(255,245,235,0.04) 25%,
-        transparent 70%);
+    position:absolute;top:50%;left:50%;
+    width:80vmin;height:80vmin;border-radius:50%;
+    background:radial-gradient(ellipse 56% 56% at 50% 50%,
+        rgba(255,252,245,0.18) 0%,
+        rgba(255,248,235,0.10) 30%,
+        rgba(255,240,220,0.04) 55%,
+        transparent 78%);
     pointer-events:none;z-index:2;
-    transition:transform 0.3s ease-out;
-    transform:translate(-50%,-45%);
+    transform:translate(-50%,-50%);
+    transition:transform 0.5s ease-out;
     will-change:transform
 }
 .lightbox-stage{
@@ -1674,17 +1676,22 @@ function disperseAndGo(el, e, imgSrc){
         requestAnimationFrame(updateBall);
     }
 
+    var dragStarted = false;
     ballScene.addEventListener('mousedown', function(e){
-        dragging = true; autoRotate = false; dragMoved = false;
+        dragging = true; autoRotate = false; dragMoved = false; dragStarted = false;
         dragStartX = e.clientX; dragStartY = e.clientY;
         dragStartRotY = targetRotY; dragStartRotX = targetRotX;
-        ballScene.classList.add('dragging');
+        /* Do NOT add .dragging yet — only on actual move */
     });
     document.addEventListener('mousemove', function(e){
         if (!dragging) return;
         var dx = e.clientX - dragStartX;
         var dy = e.clientY - dragStartY;
-        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragMoved = true;
+        if (!dragStarted && (Math.abs(dx) > 3 || Math.abs(dy) > 3)){
+            dragStarted = true; dragMoved = true;
+            ballScene.classList.add('dragging');
+        }
+        if (!dragStarted) return;
         targetRotY = dragStartRotY + dx * 0.35;
         targetRotX = dragStartRotX - dy * 0.35;
         targetRotX = Math.max(-80, Math.min(80, targetRotX));
@@ -1700,17 +1707,21 @@ function disperseAndGo(el, e, imgSrc){
     /* Touch */
     ballScene.addEventListener('touchstart', function(e){
         if (e.touches.length === 1){
-            dragging = true; autoRotate = false; dragMoved = false;
+            dragging = true; autoRotate = false; dragMoved = false; dragStarted = false;
             dragStartX = e.touches[0].clientX; dragStartY = e.touches[0].clientY;
             dragStartRotY = targetRotY; dragStartRotX = targetRotX;
-            ballScene.classList.add('dragging');
+            /* Do NOT add .dragging yet */
         }
     });
     document.addEventListener('touchmove', function(e){
         if (!dragging) return;
         var dx = e.touches[0].clientX - dragStartX;
         var dy = e.touches[0].clientY - dragStartY;
-        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragMoved = true;
+        if (!dragStarted && (Math.abs(dx) > 3 || Math.abs(dy) > 3)){
+            dragStarted = true; dragMoved = true;
+            ballScene.classList.add('dragging');
+        }
+        if (!dragStarted) return;
         targetRotY = dragStartRotY + dx * 0.35;
         targetRotX = dragStartRotX - dy * 0.35;
         targetRotX = Math.max(-80, Math.min(80, targetRotX));
@@ -1806,7 +1817,7 @@ function openStageLightbox(photoIndices, currentIdx){
     document.body.style.overflow = 'hidden';
     updateNavButtons();
     /* Center spotlight */
-    lbSpotlight.style.transform = 'translate(-50%,-45%)';
+    lbSpotlight.style.transform = 'translate(-50%,-50%)';
 }
 
 function closeLightbox(){
@@ -1933,7 +1944,7 @@ document.addEventListener('mousemove', function(e){
     var y = e.clientY / window.innerHeight;
     var tx = (x - 0.5) * 30;
     var ty = (y - 0.5) * 30;
-    lbSpotlight.style.transform = 'translate(calc(-50% + ' + tx + 'px), calc(-45% + ' + ty + 'px))';
+    lbSpotlight.style.transform = 'translate(calc(-50% + ' + tx + 'px), calc(-50% + ' + ty + 'px))';
 });
 
 /* ── Keyboard navigation ── */
